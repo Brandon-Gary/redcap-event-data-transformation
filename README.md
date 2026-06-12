@@ -13,7 +13,8 @@ The python script contained in this repository, 'mobile_event_transform.py' cond
 The CSV file 'output_sample_data' shows what the input data looks like post-transformation.
 
 ### Result
-The script is then setup on our department server scheduled to automatically run several times a day to keep the list updated as time passes and new events are scheduled. Since it's publically displayed the current version can be seen here
+The script is then setup on our department server scheduled to automatically run several times a day to keep the list updated as time passes and new events are scheduled.
+
 **Live Example:** LINK HERE
 
 #### Technologies Used:
