@@ -1,13 +1,23 @@
 # Event Data Transformation using Python and REDCap
-## Problem
+### Problem
 Our nursing team regularly conducts mobile clinics throughout the community. They were in need of a dynamic way to display a list of their upcoming events on our website. Events are scheduled with varying amounts of time in advance. The team needed a place to input event information, and then a process that would chronologically order them and present them with no further action needed from the nursing team themselves.
 
 ### Input Data
 The team enters event information into the form shown below. Each field corresponds to a column and therefore, each event corresponds to a row. An example of the data format at this step is saved as 'input_sample_data'
 <img width="587" height="335" alt="image" src="https://github.com/user-attachments/assets/2209a409-299c-4be2-a15e-ad14040756ff" />
 
-Process: The python script contained in this repository, 'mobile_event_transform.py' conducts the entire ETL process. The data is exported using a REDCap API call. By default, REDCap exported data is all of object data type. Step one, is converting date fields to datetime data type while also adding a 'Today' column with the current date. The difference in days between the created 'Today' value and each events respective date is then calculated and saved in a separate column. Any values with a negative day difference would indicate a past event, so those values are filtered out, and the remaining rows are ordered chronologically by event date. After converting from a dataframe to a dictionary, we then run a for loop which will pivot the data from a multi-row dataset into a single-row dataset. The for loop ensures that the date, loction, address, and notes for each event is assigned a unique number for the column name. Now the data can be imported back into a REDCap project once again using the API. Since the data is now a single record, it can be displayed with a unique public URL. Over time the data displayed will inevitably change, but the URL will remain the same. This allows us to embed the event list on our website using an iFrame. (Note: API tokens and API URLs are removed from the script for confidentiality reasons)
+### Process
+The python script contained in this repository, 'mobile_event_transform.py' conducts the entire ETL process. The data is exported using a REDCap API call. By default, REDCap exported data is all of object data type. Step one, is converting date fields to datetime data type while also adding a 'Today' column with the current date. The difference in days between the created 'Today' value and each events respective date is then calculated and saved in a separate column. Any values with a negative day difference would indicate a past event, so those values are filtered out, and the remaining rows are ordered chronologically by event date. After converting from a dataframe to a dictionary, we then run a for loop which will pivot the data from a multi-row dataset into a single-row dataset. The for loop ensures that the date, loction, address, and notes for each event is assigned a unique number for the column name. Now the data can be imported back into a REDCap project once again using the API. Since the data is now a single record, it can be displayed with a unique public URL. Over time the data displayed will inevitably change, but the URL will remain the same. This allows us to embed the event list on our website using an iFrame. (Note: API tokens and API URLs are removed from the script for confidentiality reasons)
 
-Output Data: The CSV file 'output_sample_data' shows what the input data looks like post-transformation.
+### Output Data
+The CSV file 'output_sample_data' shows what the input data looks like post-transformation.
 
-Conclusion: The script is then setup on our department server scheduled to automatically run several times a day to keep the list updated as time passes and new events are scheduled. Since it's publically displayed the current version can be seen here --> LINK TO LIST
+### Result
+The script is then setup on our department server scheduled to automatically run several times a day to keep the list updated as time passes and new events are scheduled. Since it's publically displayed the current version can be seen here
+**Live Example:** LINK HERE
+
+#### Technologies Used:
+•	Python
+•	Pandas
+•	REDCap
+•	Windows Task Scheduler
