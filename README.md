@@ -1,19 +1,31 @@
 # Event Data Transformation using Python and REDCap
 ### Problem
-Our nursing team regularly conducts mobile clinics throughout the community. They were in need of a dynamic way to display a list of their upcoming events on our website. Events are scheduled with varying amounts of time in advance. The team needed a place to input event information, and then a process that would chronologically order them and present them with no further action needed from the nursing team themselves.
+Our nursing team regularly conducts mobile clinics throughout the community, and needed an automatic way to display upcoming events on our website. Event information is entered at varying times throughout the year, so manual website updates would be very inefficient and prone to becoming outdated. The goal of this project was to create an automated process that would allow staff to enter event information once and have a continuously updated, chronologically ordered event list displayed online without requiring any additional action.
 
 ### Input Data
-The team enters event information into the form shown below. Each field corresponds to a column and therefore, each event corresponds to a row. An example of the data format at this step is saved as 'input_sample_data'
-<img width="587" height="335" alt="image" src="https://github.com/user-attachments/assets/2209a409-299c-4be2-a15e-ad14040756ff" />
+The team enters event information into the form shown below. Each field is stored as a separte column, and each event is stored as a separte record. An example of the source data is included in this repository as `input_sample_data.csv`
+
+<img width="587" height="435" alt="image" src="https://github.com/user-attachments/assets/2209a409-299c-4be2-a15e-ad14040756ff" />
 
 ### Process
-The python script contained in this repository, 'mobile_event_transform.py' conducts the entire ETL process. The data is exported using a REDCap API call. By default, REDCap exported data is all of object data type. Step one, is converting date fields to datetime data type while also adding a 'Today' column with the current date. The difference in days between the created 'Today' value and each events respective date is then calculated and saved in a separate column. Any values with a negative day difference would indicate a past event, so those values are filtered out, and the remaining rows are ordered chronologically by event date. After converting from a dataframe to a dictionary, we then run a for loop which will pivot the data from a multi-row dataset into a single-row dataset. The for loop ensures that the date, loction, address, and notes for each event is assigned a unique number for the column name. Now the data can be imported back into a REDCap project once again using the API. Since the data is now a single record, it can be displayed with a unique public URL. Over time the data displayed will inevitably change, but the URL will remain the same. This allows us to embed the event list on our website using an iFrame. (Note: API tokens and API URLs are removed from the script for confidentiality reasons)
+The python script `mobile_event_transform.py` performs a complete ETL workflow:
+  1. Pulls event data from REDCap using the REDCap API
+  2. Converts date fields into datetime data type
+  3. Calculates the number of days between the current date and each event date
+  4. Uses the above calculation to remove past events and retain only upcoming events
+  5. Sorts all events chronologically
+  6. Converts the multi-record dataset into a single-record structure to become more suitable for public display
+  7. Uploads the transformed dataset into a new REDCap project via the API
+
+Since the newly transformed data exists as a single record, it can be displayed with a public REDCap URL that always remains the same even as event information changes over time. This allows the event list to be embedded directly to the organization's website using an iFrame.
+
+*API tokens and URLs have been removed from the repository for security purposes.*
 
 ### Output Data
-The CSV file 'output_sample_data' shows what the input data looks like post-transformation.
+The CSV file `output_sample_data.csv` shows what the dataset looks like post-transformation. This is the structure that is uploaded back into REDCap.
 
 ### Result
-The script is then setup on our department server scheduled to automatically run several times a day to keep the list updated as time passes and new events are scheduled.
+The script was setup on a department server and scheduled to run automatically multiple times per day. As the nursing staff add, edit, or remove events in REDCap, the public event list updates automatically without requiring any manual website maintenance. This process eliminated any need for manual updating, ensures that only future events are displayed, and provides the community with an accurate and continuously updated schedule of mobile clinics.
 
 **Live Example:** LINK HERE
 
