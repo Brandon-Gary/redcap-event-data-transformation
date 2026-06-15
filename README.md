@@ -27,7 +27,9 @@ The CSV file `output_sample_data.csv` shows what the dataset looks like post-tra
 ### Result
 The script was setup on a department server and scheduled to run automatically multiple times per day. As the nursing staff add, edit, or remove events in REDCap, the public event list updates automatically without requiring any manual website maintenance. This process eliminated any need for manual updating, ensures that only future events are displayed, and provides the community with an accurate and continuously updated schedule of mobile clinics.
 
-**Live Example:** LINK HERE
+**Example:**
+<img width="1879" height="857" alt="image" src="https://github.com/user-attachments/assets/e4d4df3c-c7f3-4038-ab4d-6f7934ff7b77" />
+
 
 #### Technologies Used:
 •	Python
